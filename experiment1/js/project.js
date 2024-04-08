@@ -60,9 +60,10 @@ function main() {
   
   const template = `
   
-  Attention citizens of America, we bring to you live, ground-breaking news about a local Florida Man. On $date, local Florida Man, $name, has been accused
-  of attacking a cashier in the drive-thru of a local $city-based $location with a/an $weapon, which looked to be enhanced by $mod; with the
-  main motive being because he $motive.
+  Attention citizens of America, we bring to you live, ground-breaking news about a local Florida Man. 
+  
+  On $date, local Florida Man, $name, has been accused of attacking a cashier in the drive-thru of a local $city-based $location with a/an $weapon, which looked to be enhanced by $mod; with 
+the main motive being because he $motive.
 
   Click button below to reroll
   
