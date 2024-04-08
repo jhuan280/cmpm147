@@ -37,7 +37,7 @@ function main() {
 
   const fillers = {
     location: ["Arby's", "Wendy's", "KFC", "McDonald's", "Pizza Hut", "Taco Bell"],
-    weapon: ["Alligator", "Beaver", "Goat", "Monkey", "Horse", "Bird"],
+    weapon: ["an Alligator", "a Beaver", "a Goat", "a Monkey", "a Horse", "a Bird"],
     name: ["Ronald", "Jim", "Bob", "Bill", "Steve", "Henry"],
     mod: ["Fire", "Ice", "Lightning", "Sharpness", "Life Steal", "Looting"],
     motive: ["was hungry", "was angry", "was impatient in the drive-thru", "was depressed", "was jealous of other people's orders", "allowed his intrusive thoughts to take over"],
@@ -62,8 +62,8 @@ function main() {
   
   Attention citizens of America, we bring to you live, ground-breaking news about a local Florida Man. 
   
-  On $date, local Florida Man, $name, has been accused of attacking a cashier in the drive-thru of a local $city-based $location with a/an $weapon, which looked to be enhanced by $mod; with 
-the main motive being because he $motive.
+  On $date, local Florida Man, $name, has been accused of attacking a cashier in the drive-thru of a local $city-based $location with $weapon, which looked to be enhanced by $mod; 
+  with the main motive being because he $motive.
 
   Click button below to reroll
   
