@@ -2,7 +2,7 @@
 <html>
 <head>
 	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Subject/Topic</title>
+	<title>Experiment 2 - Living Impressions</title>
 
 	<!-- Use UTF character set, a good idea with any webpage -->
 	<meta charset="UTF-8" />
@@ -48,7 +48,7 @@
                 </div>
 			</div>
 
-			<div class="minor-section">
+			<!-- <div class="minor-section">
 				<h2>Description</h2>
 				<p>This project was based off Mount Shasta. This mountain is technically classified as a potentially active
 					volcano located in Siskiyou County, California.
@@ -57,16 +57,53 @@
 				<br>
 				<a href="https://www.tripadvisor.com/Attraction_Review-g32755-d259146-Reviews-Mount_Shasta-Mount_Shasta_California.html">Source</a>
 				</p>
+			</div> -->
+
+			<div class="minor-section">
+				<h2>Description</h2>
+				<br><br>
+				<div id="description-content">
+					<img src="shasta.png" id="description-image">
+					<p>This project was based off Mount Shasta. This mountain is technically classified as a potentially active
+						volcano located in Siskiyou County, California.
+					<br><br>
+					<a href="https://www.tripadvisor.com/Attraction_Review-g32755-d259146-Reviews-Mount_Shasta-Mount_Shasta_California.html">Source</a>
+					</p>
+				</div>
 			</div>
+			
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<!-- <p>Describe in detail what you did technically and how it works?</p> -->
+				<p>
+					Relation to inspring image:
+					<br><br>
+					
+					- Color: The sky, grass, tree, fern, and mountain colors were sampled from the inspiring image using the Photoshop eyedropper tool. 
+					The snow pile on the mountain as well as the snowflakes were just a pure white color.
+					<br><br>
+					- Primitives: The trees are rendered with `triangle` primitives. The snowflakes were created using the ellipse function.
+					<br><br>
+					- Polygons: The background mountain is a single randomly polygon using `vertex` calls.
+					The snow pile was created using both the beginShapre and endShape functions, as well as using the random function for the vertices.
+					<br><br>
+					- Composition: Different random seed values lead to differently shaped mountains and differently positioned trees.
+					The ferns are also random generated, as well as the shape of the snow pile and quantity of snowflakes.
+					<br><br>
+					- Life: The position of trees is animated over time as if to simulate the view from a passing train and the slightly responds to the horizontal motion of the mouse cursor.
+					The snowflakes and fern appear in random quantities and generate over a period of time much like the trees using millis, with the ferns also using randomness to determine their color. 
+
+				</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<!-- <p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p> -->
+				<p>I found this project to be pretty interesting as generative art was something completely foreign to me.
+					The project's restrictions made it pretty interesting to try and work around and I think it was a good
+					learning experience as a result.
+				</p>
 			</div>
 
 		</section>

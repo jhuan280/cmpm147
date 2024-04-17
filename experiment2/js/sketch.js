@@ -152,6 +152,7 @@ function draw() {
   }
   //chatGPT
 
+  //random fern life
   fill(treeColor);
   const trees = 100 * random(); // Increase the multiplier for more trees
   const scrub = mouseX / width;
@@ -165,7 +166,7 @@ function draw() {
     triangle(x, y - s, x - s / 4, y, x + s / 4, y);
   }
 
-  // Update and display clouds
+  // Update and display snowflakes
   for (let cloud of clouds) {
     cloud.update();
     cloud.display();
