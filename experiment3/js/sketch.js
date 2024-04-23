@@ -171,8 +171,13 @@ function generateGrid(numCols, numRows) {
   return grid;
 }
 
+$("#switchButton").click(function() {
+  
+});
+
 function drawGrid(grid) {
   // Set up background and time variables
+
   background(128);
   const t = 5 * millis() / 750.0; // Increase the speed by multiplying t by 3
 
@@ -222,16 +227,21 @@ function drawGrid(grid) {
     }
   }
   
-  // Draw static black rectangles representing clouds
-  stroke(100, 100); // Lighter shade for the border
-  fill(50, 100); // Lighter shade of black
-  rect(50 + t % width, 50, 100, 50); // First cloud
-  rect(200 + t % width, 80, 80, 40); // Second cloud
-  rect(350 + t % width, 60, 120, 60); // Third cloud
-  rect(500 + t % width, 70, 90, 45); // Fourth cloud
-  rect(50 + t % width, height - 100, 100, 50); // Fifth cloud
-  rect(200 + t % width, height - 130, 80, 40); // Sixth cloud
+  // Draw clouds if less than 10000 milliseconds have passed
+  if (millis() < 30000) {
+    // Draw static black rectangles representing clouds
+    stroke(100, 100); // Lighter shade for the border
+    fill(50, 100); // Lighter shade of black
+    rect(50 + t % width, 50, 100, 50); // First cloud
+    rect(200 + t % width, 80, 80, 40); // Second cloud
+    // rect(350 + t % width, 60, 120, 60); // Third cloud
+    // rect(500 + t % width, 70, 90, 45); // Fourth cloud
+    // rect(50 + t % width, height - 100, 100, 50); // Fifth cloud
+    // rect(200 + t % width, height - 130, 80, 40); // Sixth cloud
+  }
+
 }
+
 
 function drawContext(grid, i, j, target, dti, dtj, invert = false) {
   let code = gridCode(grid, i, j, target);
