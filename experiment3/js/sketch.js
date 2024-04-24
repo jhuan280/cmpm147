@@ -50,8 +50,10 @@ function setup() {
 
   select("#reseedButton").mousePressed(reseed);
   select("#asciiBox").input(reparseGrid);
+  select("#switchButton").mousePressed(switchWorld);
 
   reseed();
+
 
   // // create an instance of the class
   // myInstance = new MyClass("VALUE1", "VALUE2");
@@ -73,6 +75,16 @@ function preload() {
   );
 }
 
+//switch worlds
+
+let isDungeon = false; // toggle for changing between overworld and dungeon
+
+function switchWorld() {
+  isDungeon = !isDungeon; // toggle
+  // grid = regenerateGrid();
+  regenerateGrid();
+}
+
 function reseed() {
   seed = (seed | 0) + 1109;
   randomSeed(seed);
@@ -82,13 +94,17 @@ function reseed() {
 }
 
 function regenerateGrid() {
-  select("#asciiBox").value(gridToString(generateGrid(numCols, numRows)));
+  let grid = generateGrid(numCols, numRows);
+
+  select("#asciiBox").value(gridToString(grid));
   reparseGrid();
 }
 
 function reparseGrid() {
   currentGrid = stringToGrid(select("#asciiBox").value());
 }
+
+// switch world
 
 function gridToString(grid) {
   let rows = [];
@@ -123,122 +139,223 @@ function placeTile(i, j, ti, tj) {
 }
 
 // p2_solution //
-
 /* exported generateGrid, drawGrid */
 /* global placeTile */
-
 function generateGrid(numCols, numRows) {
-  let grid = [];
 
-  // Loop through each row
-  for (let i = 0; i < numRows; i++) {
-    let row = [];
-    
-    // Loop through each column in the current row
-    for (let j = 0; j < numCols; j++) {
-      // Generate outer noise value based on current row and column
-      let outerValue = noise(i / 40, j / 40);
+  //overworld
+  if (!isDungeon){
+
+    let grid = [];
+  
+    // Loop through each row
+    for (let i = 0; i < numRows; i++) {
+      let row = [];
       
-      // Check if the absolute difference between outerValue and 0.5 is less than 0.03
-      if (abs(outerValue - 0.5) < 0.03) {
-        // If true, push "w" to the row array
-        row.push("w"); // Represents water
-      } 
-      
-      else {
-        // If false, generate inner noise value based on current row and column
-        let innerValue = noise(i / 20, j / 20);
+      // Loop through each column in the current row
+      for (let j = 0; j < numCols; j++) {
+        // Generate outer noise value based on current row and column
+        let outerValue = noise(i / 40, j / 40);
         
-        // Check if innerValue is greater than 0.5
-        if (innerValue > 0.5) {
-          // If true, push ":" to the row array
-          row.push(":"); // Represents special content
+        // Check if the absolute difference between outerValue and 0.5 is less than 0.03
+        if (abs(outerValue - 0.5) < 0.03) {
+          // If true, push "w" to the row array
+          row.push("w"); // Represents water
         } 
         
         else {
-          // If false, push "." to the row array
-          row.push("."); // Represents default content
-        }
-      }
-      
+          // If false, generate inner noise value based on current row and column
+          let innerValue = noise(i / 20, j / 20);
+          
+          // Check if innerValue is greater than 0.5
+          if (innerValue > 0.5) {
+            // If true, push ":" to the row array
+            row.push(":"); // Represents special content
+          } 
+          
+          else {
+            // If false, push "." to the row array
+            row.push("."); // Represents default content
+          }
+        }  
+      } 
+      // Push the row array to the grid array
+      grid.push(row);
     }
-    
-    // Push the row array to the grid array
-    grid.push(row);
+    // Return the generated grid
+    return grid;
   }
 
-  // Return the generated grid
-  return grid;
+  //dungeon
+  else if (isDungeon){
+
+    let grid = [];
+  
+    // Loop through each row
+    for (let i = 0; i < numRows; i++) {
+      let row = [];
+      
+      // Loop through each column in the current row
+      for (let j = 0; j < numCols; j++) {
+        // Generate outer noise value based on current row and column
+        let outerValue = noise(i / 40, j / 40);
+        
+        // Check if the absolute difference between outerValue and 0.5 is less than 0.03
+        if (abs(outerValue - 0.5) < 0.03) {
+          // If true, push "w" to the row array
+          row.push("w"); // Represents water
+        } 
+        
+        else {
+          // If false, generate inner noise value based on current row and column
+          let innerValue = noise(i / 20, j / 20);
+          
+          // Check if innerValue is greater than 0.5
+          if (innerValue > 0.5) {
+            // If true, push ":" to the row array
+            row.push(":"); // Represents special content
+          } 
+          
+          else {
+            // If false, push "." to the row array
+            row.push("."); // Represents default content
+          }
+        }
+        
+      }  
+      // Push the row array to the grid array
+      grid.push(row);
+    }
+  
+    // Return the generated grid
+    return grid;
+  }
 }
 
-$("#switchButton").click(function() {
-  
-});
 
 function drawGrid(grid) {
   // Set up background and time variables
 
-  background(128);
-  const t = 5 * millis() / 750.0; // Increase the speed by multiplying t by 3
+  //overworld
+  if (!isDungeon){
 
-  // Loop through each cell in the grid
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[i].length; j++) {
-      // Place a tile based on Perlin noise for terrain
-      // water
-      placeTile(i, j, (4 * pow(noise(t / 10, i, j / 4 + t), 2)) | 0, 13);
-
-      // Check if the current cell contains ":"
-      if (grid[i][j] === ":") {
-        // Place a random tile for specific content
-        // : = dirt
-        if (random() < 0.03) { // 3% chance of altering the tile
-          // Alter the tile to something else
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
-          placeTile(i, j, (4 * pow(random(), 10)) | 27, 0);
-          
+    background(128);
+    const t = 5 * millis() / 750.0; // Increase the speed by multiplying t by 3
+  
+    // Loop through each cell in the grid
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[i].length; j++) {
+        // Place a tile based on Perlin noise for terrain
+        // water
+        placeTile(i, j, (4 * pow(noise(t / 10, i, j / 4 + t), 2)) | 0, 13);
+  
+        // Check if the current cell contains ":"
+        if (grid[i][j] === ":") {
+          // Place a random tile for specific content
+          // : = dirt
+          if (random() < 0.03) { // 3% chance of altering the tile
+            // Alter the tile to something else
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
+            placeTile(i, j, (4 * pow(random(), 10)) | 27, 0);
+            
+          } else {
+            // Otherwise, keep the dirt tile
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
+          }
         } else {
-          // Otherwise, keep the dirt tile
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
+          // Otherwise, draw context based on content "w"
+          // w = water
+          drawContext(grid, i, j, "w", 9, 3, true);
         }
-      } else {
-        // Otherwise, draw context based on content "w"
-        // w = water
-        drawContext(grid, i, j, "w", 9, 3, true);
-      }
-
-      // Check if the current cell contains "."
-      if (grid[i][j] === ".") {
-        // Place a random tile for specific content
-        // grass
-        if (random() < 0.03) { // 3% chance of altering the tile
-          // Alter the tile to something else
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
-          placeTile(i, j, (4 * pow(random(), 10)) | 14, 12);
+  
+        // Check if the current cell contains "."
+        if (grid[i][j] === ".") {
+          // Place a random tile for specific content
+          // grass
+          if (random() < 0.03) { // 3% chance of altering the tile
+            // Alter the tile to something else
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
+            placeTile(i, j, (4 * pow(random(), 10)) | 14, 12);
+          } else {
+            // Otherwise, keep the grass tile
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
+          }
         } else {
-          // Otherwise, keep the grass tile
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
+          // Otherwise, draw context based on content "."
+          // . = grass + dirt
+          drawContext(grid, i, j, ".", 4, 12);
         }
-      } else {
-        // Otherwise, draw context based on content "."
-        // . = grass + dirt
-        drawContext(grid, i, j, ".", 4, 12);
       }
     }
+    
+    // Draw clouds if less than 10000 milliseconds have passed
+    if (millis() < 30000) {
+      // Draw static black rectangles representing clouds
+      stroke(100, 100); // Lighter shade for the border
+      fill(50, 100); // Lighter shade of black
+      rect(50 + t % width, 50, 100, 50); // First cloud
+      rect(200 + t % width, 80, 80, 40); // Second cloud
+      // rect(350 + t % width, 60, 120, 60); // Third cloud
+      // rect(500 + t % width, 70, 90, 45); // Fourth cloud
+      // rect(50 + t % width, height - 100, 100, 50); // Fifth cloud
+      // rect(200 + t % width, height - 130, 80, 40); // Sixth cloud
+    }
   }
+
+  //dungeon
+  else if (isDungeon){
+    
+    background(128);
+    const t = 5 * millis() / 750.0; // Increase the speed by multiplying t by 3
   
-  // Draw clouds if less than 10000 milliseconds have passed
-  if (millis() < 30000) {
-    // Draw static black rectangles representing clouds
-    stroke(100, 100); // Lighter shade for the border
-    fill(50, 100); // Lighter shade of black
-    rect(50 + t % width, 50, 100, 50); // First cloud
-    rect(200 + t % width, 80, 80, 40); // Second cloud
-    // rect(350 + t % width, 60, 120, 60); // Third cloud
-    // rect(500 + t % width, 70, 90, 45); // Fourth cloud
-    // rect(50 + t % width, height - 100, 100, 50); // Fifth cloud
-    // rect(200 + t % width, height - 130, 80, 40); // Sixth cloud
+    // Loop through each cell in the grid
+    for (let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[i].length; j++) {
+        // Place a tile based on Perlin noise for terrain
+        // water
+        placeTile(i, j, (4 * pow(noise(t / 10, i, j / 4 + t), 2)) | 0, 13);
+  
+        // Check if the current cell contains ":"
+        if (grid[i][j] === ":") {
+          // Place a random tile for specific content
+          // : = dirt
+          if (random() < 0.03) { // 3% chance of altering the tile
+            // Alter the tile to something else
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
+            
+          } else {
+            // Otherwise, keep the dirt tile
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
+          }
+        } else {
+          // Otherwise, draw context based on content "w"
+          // w = water
+          drawContext(grid, i, j, "w", 9, 3, true);
+        }
+  
+        // Check if the current cell contains "."
+        if (grid[i][j] === ".") {
+          // Place a random tile for specific content
+          // grass
+          if (random() < 0.03) { // 3% chance of altering the tile
+            // Alter the tile to something else
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
+          } else {
+            // Otherwise, keep the grass tile
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
+          }
+        } else {
+          // Otherwise, draw context based on content "."
+          // . = grass + dirt
+          drawContext(grid, i, j, ".", 4, 12);
+        }
+      }
+    }
+
   }
+
 
 }
 
