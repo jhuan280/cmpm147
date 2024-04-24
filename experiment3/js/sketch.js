@@ -340,7 +340,18 @@ else if (isDungeon){
     for (let i = room.y; i < room.y + room.height; i++) {
       for (let j = room.x; j < room.x + room.width; j++) {
         // Place a tile based on Perlin noise for terrain
-        placeTile(i, j, (4 * pow(random(), 10)) | 2, 28);
+
+        if (random() < 0.5) { // 3% chance of altering the tile
+          // Alter the tile to something else
+          placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+          placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+        } else {
+          // Otherwise, keep the dirt tile
+          placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+          placeTile(i, j, (4 * pow(random(), 10)) | 2, 28);
+        }
+        // placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+        // placeTile(i, j, (4 * pow(random(), 10)) | 2, 28);
 
         // Check if the current cell contains content and draw it accordingly
         if (grid[i][j] === "y") {
@@ -399,9 +410,6 @@ else if (isDungeon){
     }
   }
 }
-
-
-
 
 
 
