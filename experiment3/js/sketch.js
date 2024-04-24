@@ -232,29 +232,6 @@ function generateGrid(numCols, numRows) {
   }
 }
 
-
-// function generateRooms(grid, numRooms, minSize, maxSize) {
-//   for (let i = 0; i < numRooms; i++) {
-//     // Generate random width and height for the room
-//     let width = floor(random(minSize, maxSize));
-//     let height = floor(random(minSize, maxSize));
-    
-//     // Generate random position for the room within the grid
-//     let x = floor(random(grid.length - width));
-//     let y = floor(random(grid[0].length - height));
-    
-//     // Fill the grid with the room
-//     for (let row = x; row < x + width; row++) {
-//       for (let col = y; col < y + height; col++) {
-//         grid[row][col] = ".";
-//       }
-//     }
-//   }
-// }
-
-
-
-
 function drawGrid(grid) {
   // Set up background and time variables
 
@@ -324,108 +301,108 @@ function drawGrid(grid) {
     }
   }
 
+
+
 // dungeon
-else if (isDungeon) {
+else if (isDungeon){
+    
   background(128);
   const t = 5 * millis() / 750.0; // Increase the speed by multiplying t by 3
 
-  // Define the boundaries of the first rectangular room
-  const roomStartX1 = 5; // Starting X position of the first room
-  const roomStartY1 = 5; // Starting Y position of the first room
-  const roomWidth1 = 10; // Width of the first room
-  const roomHeight1 = 8; // Height of the first room
+  // Define room parameters
+  const numRooms = 5; // Number of rooms
+  const minRoomSize = 4; // Minimum size of a room
+  const maxRoomSize = 8; // Maximum size of a room
+  const minRoomSpacing = 4; // Minimum spacing between rooms
+  const maxRoomSpacing = 8; // Maximum spacing between rooms
+  const corridorWidth = 2; // Width of the corridor between rooms
 
-  // Loop through each cell in the grid for the first room
-  for (let i = roomStartY1; i < roomStartY1 + roomHeight1; i++) {
-    for (let j = roomStartX1; j < roomStartX1 + roomWidth1; j++) {
-      // Place a tile based on Perlin noise for terrain
-      placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+  // Array to store room positions
+  const rooms = [];
 
-      // Check if the current cell contains "y"
-      if (grid[i][j] === "y") {
-        // Place a random tile for specific content
-        // "y" = dirt
-        if (random() < 0.03) { // 3% chance of altering the tile
-          // Alter the tile to something else
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
-          placeTile(i, j, (4 * pow(random(), 10)) | 1, 21);
-        } else {
-          // Otherwise, keep the dirt tile
-          placeTile(i, j, (pow(random(), 10)) | 1, 21);
-        }
-      } else {
-        // Otherwise, draw context based on content "x"
-        // "x" = water
-        drawContext(grid, i, j, "x", 0, 25, true);
-      }
-    }
+  // Generate rooms
+  for (let r = 0; r < numRooms; r++) {
+    // Randomly generate room width and height
+    const roomWidth = floor(random(minRoomSize, maxRoomSize));
+    const roomHeight = floor(random(minRoomSize, maxRoomSize));
+
+    // Randomly generate room position with spacing
+    const roomX = r > 0 ? rooms[r - 1].x + rooms[r - 1].width + floor(random(minRoomSpacing, maxRoomSpacing)) : floor(random(1, numCols - roomWidth));
+    const roomY = floor(random(1, numRows - roomHeight));
+
+    // Add room to the list
+    rooms.push({ x: roomX, y: roomY, width: roomWidth, height: roomHeight });
   }
 
-  // Define the boundaries of the new smaller, rectangular room
-  const roomStartX3 = 15; // Starting X position of the new room
-  const roomStartY3 = 7; // Starting Y position of the new room
-  const roomWidth3 = 6; // Width of the new room
-  const roomHeight3 = 4; // Height of the new room
+  // Loop through each room and fill it with tiles
+  for (let r = 0; r < rooms.length; r++) {
+    const room = rooms[r];
+    for (let i = room.y; i < room.y + room.height; i++) {
+      for (let j = room.x; j < room.x + room.width; j++) {
+        // Place a tile based on Perlin noise for terrain
+        placeTile(i, j, (4 * pow(random(), 10)) | 2, 28);
 
-  // Loop through each cell in the grid for the new room
-  for (let i = roomStartY3; i < roomStartY3 + roomHeight3; i++) {
-    for (let j = roomStartX3; j < roomStartX3 + roomWidth3; j++) {
-      // Place a tile based on Perlin noise for terrain
-      // placeTile(i, j, (4 * pow(random(), 10)) | 0, 21);
-      placeTile(i, j, (4 * pow(noise(t / 10, i, j / 4 + t), 2)) | 0, 21);
-
-      // Check if the current cell contains "a"
-      if (grid[i][j] === "a") {
-        // Place a random tile for specific content
-        // "a" = stone
-        if (random() < 0.03) { // 3% chance of altering the tile
-          // Alter the tile to something else
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 14);
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 14);
+        // Check if the current cell contains content and draw it accordingly
+        if (grid[i][j] === "y") {
+          // Place a random tile for specific content ("y" = dirt)
+          if (random() < 0.03) { // 3% chance of altering the tile
+            // Alter the tile to something else
+            placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+            placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+          } else {
+            // Otherwise, keep the dirt tile
+            placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+          }
+        } else if (grid[i][j] === "z") {
+          // Place a random tile for specific content ("z" = grass)
+          if (random() < 0.03) { // 3% chance of altering the tile
+            // Alter the tile to something else
+            placeTile(i, j, (4 * pow(random(), 10)) | 1, 21);
+            placeTile(i, j, (4 * pow(random(), 10)) | 1, 21);
+          } else {
+            // Otherwise, keep the grass tile
+            placeTile(i, j, (4 * pow(random(), 10)) | 1, 21);
+          }
+        } else if (grid[i][j] === "w") {
+          // Place a random tile for specific content ("w" = stone)
+          if (random() < 0.03) { // 3% chance of altering the tile
+            // Alter the tile to something else
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 4);
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 4);
+          } else {
+            // Otherwise, keep the stone tile
+            placeTile(i, j, (4 * pow(random(), 10)) | 0, 4);
+          }
         } else {
-          // Otherwise, keep the stone tile
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 14);
+          // Draw context based on content ("x" = water)
+          drawContext(grid, i, j, "x", 9, 3, true);
         }
-      } else {
-        // Otherwise, draw context based on content "a"
-        // "a" = stone
-        drawContext(grid, i, j, "a", 5, 25);
       }
     }
-  }
 
-  // Define the boundaries of the second rectangular room
-  const roomStartX2 = 20; // Starting X position of the second room
-  const roomStartY2 = 10; // Starting Y position of the second room
-  const roomWidth2 = 8; // Width of the second room
-  const roomHeight2 = 6; // Height of the second room
+    // Connect rooms horizontally with corridors
+    if (r < rooms.length - 1) {
+      const currentRoom = rooms[r];
+      const nextRoom = rooms[r + 1];
 
-  // Loop through each cell in the grid for the second room
-  for (let i = roomStartY2; i < roomStartY2 + roomHeight2; i++) {
-    for (let j = roomStartX2; j < roomStartX2 + roomWidth2; j++) {
-      // Place a tile based on Perlin noise for terrain
-      placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+      // Find the starting and ending X positions of the corridor
+      const corridorStartX = currentRoom.x + currentRoom.width;
+      const corridorEndX = nextRoom.x;
 
-      // Check if the current cell contains "z"
-      if (grid[i][j] === "z") {
-        // Place a random tile for specific content
-        // "z" = grass
-        if (random() < 0.03) { // 3% chance of altering the tile
-          // Alter the tile to something else
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
-        } else {
-          // Otherwise, keep the grass tile
-          placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
+      // Loop through each cell in the corridor area and fill it with tiles
+      for (let i = currentRoom.y + Math.floor(currentRoom.height / 2) - Math.floor(corridorWidth / 2); i < currentRoom.y + Math.floor(currentRoom.height / 2) + Math.ceil(corridorWidth / 2); i++) {
+        for (let j = corridorStartX; j < corridorEndX; j++) {
+          // Place a tile for the corridor
+          placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
         }
-      } else {
-        // Otherwise, draw context based on content "z"
-        // "z" = grass + dirt
-        drawContext(grid, i, j, "z", 2, 28);
       }
     }
   }
 }
+
+
+
+
 
 
 }

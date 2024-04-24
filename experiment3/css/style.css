@@ -21,8 +21,8 @@ body {
 
 #asciiBox {
     position: absolute;
-    top: 120px;
-    left: 500px; /* Adjusted left position */
+    top: 380px; /* Adjusted top position */
+    left: 500px; /* Left position remains unchanged */
 }
 
 #switchButton {
