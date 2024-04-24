@@ -203,7 +203,7 @@ function generateGrid(numCols, numRows) {
         // Check if the absolute difference between outerValue and 0.5 is less than 0.03
         if (abs(outerValue - 0.5) < 0.03) {
           // If true, push "w" to the row array
-          row.push("w"); // Represents water
+          row.push("x"); // Represents water
         } 
         
         else {
@@ -213,12 +213,12 @@ function generateGrid(numCols, numRows) {
           // Check if innerValue is greater than 0.5
           if (innerValue > 0.5) {
             // If true, push ":" to the row array
-            row.push(":"); // Represents special content
+            row.push("y"); // Represents special content
           } 
           
           else {
             // If false, push "." to the row array
-            row.push("."); // Represents default content
+            row.push("z"); // Represents default content
           }
         }
         
@@ -231,6 +231,28 @@ function generateGrid(numCols, numRows) {
     return grid;
   }
 }
+
+
+// function generateRooms(grid, numRooms, minSize, maxSize) {
+//   for (let i = 0; i < numRooms; i++) {
+//     // Generate random width and height for the room
+//     let width = floor(random(minSize, maxSize));
+//     let height = floor(random(minSize, maxSize));
+    
+//     // Generate random position for the room within the grid
+//     let x = floor(random(grid.length - width));
+//     let y = floor(random(grid[0].length - height));
+    
+//     // Fill the grid with the room
+//     for (let row = x; row < x + width; row++) {
+//       for (let col = y; col < y + height; col++) {
+//         grid[row][col] = ".";
+//       }
+//     }
+//   }
+// }
+
+
 
 
 function drawGrid(grid) {
@@ -302,59 +324,108 @@ function drawGrid(grid) {
     }
   }
 
-  //dungeon
-  else if (isDungeon){
-    
-    background(128);
-    const t = 5 * millis() / 750.0; // Increase the speed by multiplying t by 3
-  
-    // Loop through each cell in the grid
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid[i].length; j++) {
-        // Place a tile based on Perlin noise for terrain
-        // water
-        placeTile(i, j, (4 * pow(noise(t / 10, i, j / 4 + t), 2)) | 0, 13);
-  
-        // Check if the current cell contains ":"
-        if (grid[i][j] === ":") {
-          // Place a random tile for specific content
-          // : = dirt
-          if (random() < 0.03) { // 3% chance of altering the tile
-            // Alter the tile to something else
-            placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
-            placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
-            
-          } else {
-            // Otherwise, keep the dirt tile
-            placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
-          }
+// dungeon
+else if (isDungeon) {
+  background(128);
+  const t = 5 * millis() / 750.0; // Increase the speed by multiplying t by 3
+
+  // Define the boundaries of the first rectangular room
+  const roomStartX1 = 5; // Starting X position of the first room
+  const roomStartY1 = 5; // Starting Y position of the first room
+  const roomWidth1 = 10; // Width of the first room
+  const roomHeight1 = 8; // Height of the first room
+
+  // Loop through each cell in the grid for the first room
+  for (let i = roomStartY1; i < roomStartY1 + roomHeight1; i++) {
+    for (let j = roomStartX1; j < roomStartX1 + roomWidth1; j++) {
+      // Place a tile based on Perlin noise for terrain
+      placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+
+      // Check if the current cell contains "y"
+      if (grid[i][j] === "y") {
+        // Place a random tile for specific content
+        // "y" = dirt
+        if (random() < 0.03) { // 3% chance of altering the tile
+          // Alter the tile to something else
+          placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
+          placeTile(i, j, (4 * pow(random(), 10)) | 1, 21);
         } else {
-          // Otherwise, draw context based on content "w"
-          // w = water
-          drawContext(grid, i, j, "w", 9, 3, true);
+          // Otherwise, keep the dirt tile
+          placeTile(i, j, (pow(random(), 10)) | 1, 21);
         }
-  
-        // Check if the current cell contains "."
-        if (grid[i][j] === ".") {
-          // Place a random tile for specific content
-          // grass
-          if (random() < 0.03) { // 3% chance of altering the tile
-            // Alter the tile to something else
-            placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
-            placeTile(i, j, (4 * pow(random(), 10)) | 0, 0);
-          } else {
-            // Otherwise, keep the grass tile
-            placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
-          }
-        } else {
-          // Otherwise, draw context based on content "."
-          // . = grass + dirt
-          drawContext(grid, i, j, ".", 4, 12);
-        }
+      } else {
+        // Otherwise, draw context based on content "x"
+        // "x" = water
+        drawContext(grid, i, j, "x", 0, 25, true);
       }
     }
-
   }
+
+  // Define the boundaries of the new smaller, rectangular room
+  const roomStartX3 = 15; // Starting X position of the new room
+  const roomStartY3 = 7; // Starting Y position of the new room
+  const roomWidth3 = 6; // Width of the new room
+  const roomHeight3 = 4; // Height of the new room
+
+  // Loop through each cell in the grid for the new room
+  for (let i = roomStartY3; i < roomStartY3 + roomHeight3; i++) {
+    for (let j = roomStartX3; j < roomStartX3 + roomWidth3; j++) {
+      // Place a tile based on Perlin noise for terrain
+      // placeTile(i, j, (4 * pow(random(), 10)) | 0, 21);
+      placeTile(i, j, (4 * pow(noise(t / 10, i, j / 4 + t), 2)) | 0, 21);
+
+      // Check if the current cell contains "a"
+      if (grid[i][j] === "a") {
+        // Place a random tile for specific content
+        // "a" = stone
+        if (random() < 0.03) { // 3% chance of altering the tile
+          // Alter the tile to something else
+          placeTile(i, j, (4 * pow(random(), 10)) | 0, 14);
+          placeTile(i, j, (4 * pow(random(), 10)) | 0, 14);
+        } else {
+          // Otherwise, keep the stone tile
+          placeTile(i, j, (4 * pow(random(), 10)) | 0, 14);
+        }
+      } else {
+        // Otherwise, draw context based on content "a"
+        // "a" = stone
+        drawContext(grid, i, j, "a", 5, 25);
+      }
+    }
+  }
+
+  // Define the boundaries of the second rectangular room
+  const roomStartX2 = 20; // Starting X position of the second room
+  const roomStartY2 = 10; // Starting Y position of the second room
+  const roomWidth2 = 8; // Width of the second room
+  const roomHeight2 = 6; // Height of the second room
+
+  // Loop through each cell in the grid for the second room
+  for (let i = roomStartY2; i < roomStartY2 + roomHeight2; i++) {
+    for (let j = roomStartX2; j < roomStartX2 + roomWidth2; j++) {
+      // Place a tile based on Perlin noise for terrain
+      placeTile(i, j, (4 * pow(random(), 10)) | 21, 21);
+
+      // Check if the current cell contains "z"
+      if (grid[i][j] === "z") {
+        // Place a random tile for specific content
+        // "z" = grass
+        if (random() < 0.03) { // 3% chance of altering the tile
+          // Alter the tile to something else
+          placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
+          placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
+        } else {
+          // Otherwise, keep the grass tile
+          placeTile(i, j, (4 * pow(random(), 10)) | 0, 12);
+        }
+      } else {
+        // Otherwise, draw context based on content "z"
+        // "z" = grass + dirt
+        drawContext(grid, i, j, "z", 2, 28);
+      }
+    }
+  }
+}
 
 
 }
