@@ -239,17 +239,25 @@ const w1 = (sketch) => {
     tile_rows = sketch.ceil(sketch.height / (tile_height_step_main * 2));
   }
   
-  sketch.mouseClicked = () => {
+  sketch.mouseClicked = (event) => {
+    // Check if the event target is an anchor element
+    if (event.target.tagName === 'A') {
+        // If it's a link, return early without executing the rest of the code
+        return;
+    }
+
+    // If it's not a link, continue with the rest of the code
     let world_pos = screenToWorld(
-      [0 - sketch.mouseX, sketch.mouseY],
-      [camera_offset.x, camera_offset.y]
+        [0 - sketch.mouseX, sketch.mouseY],
+        [camera_offset.x, camera_offset.y]
     );
-  
-    // if (window.p3_tileClicked) {
+
     p3_tileClicked(world_pos[0], world_pos[1]);
-    // }
+
+    // Prevent the default behavior of the click event
     return false;
   }
+
   
   sketch.draw = () => {
     // Keyboard controls!
@@ -592,17 +600,25 @@ function rebuildWorld(key) {
   tile_rows = Math.ceil(sketch.height / (tile_height_step_main * 2));
 }
 
-sketch.mouseClicked = () => {
+sketch.mouseClicked = (event) => {
+  // Check if the event target is an anchor element or any of its parents are anchor elements
+  if (event.target.closest('a')) {
+      // If it's a link or any of its parents are links, return early without executing the rest of the code
+      return;
+  }
+
+  // If it's not a link, continue with the rest of the code
   let world_pos = screenToWorld(
-    [0 - sketch.mouseX, sketch.mouseY],
-    [camera_offset.x, camera_offset.y]
+      [0 - sketch.mouseX, sketch.mouseY],
+      [camera_offset.x, camera_offset.y]
   );
 
-  // if (window.p3_tileClicked) {
   p3_tileClicked(world_pos[0], world_pos[1]);
-  // }
+
+  // Prevent the default behavior of the click event
   return false;
 }
+
 
 sketch.draw = () => {
   // Keyboard controls!
@@ -1008,17 +1024,25 @@ const w3 = (sketch) => {
     tile_rows = Math.ceil(sketch.height / (tile_height_step_main * 2));
   }
   
-  sketch.mouseClicked = () => {
+  sketch.mouseClicked = (event) => {
+    // Check if the event target is an anchor element
+    if (event.target.tagName === 'A') {
+        // If it's a link, return early without executing the rest of the code
+        return;
+    }
+
+    // If it's not a link, continue with the rest of the code
     let world_pos = screenToWorld(
-      [0 - sketch.mouseX, sketch.mouseY],
-      [camera_offset.x, camera_offset.y]
+        [0 - sketch.mouseX, sketch.mouseY],
+        [camera_offset.x, camera_offset.y]
     );
-  
-    // if (window.p3_tileClicked) {
+
     p3_tileClicked(world_pos[0], world_pos[1]);
-    // }
+
+    // Prevent the default behavior of the click event
     return false;
   }
+
   
   sketch.draw = () => {
     // Keyboard controls!
