@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- This title is used for tabs and bookmarks -->
+	<title>Experiment 04: Infinite Worlds</title>
+
+	<!-- Use UTF character set, a good idea with any webpage -->
+	<meta charset="UTF-8" />
+	<!-- Set viewport so page remains consistently scaled w narrow devices -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
+	<link rel="stylesheet" type="text/css" href="../css/site.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<!-- Load jQuery library -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+	<!-- Load p5.js library -->
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+
+	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
+    <script type="text/javascript" src="../js/site.js" DEFER></script>
+	<!-- Use me for a JavaScript OOP Project -->
+	<script type="text/javascript" src="./js/project.js" DEFER></script>
+	<!-- Use me for a p5.js project -->
+	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+	<!-- Use me for a p5.js project -->
+	<script type="text/javascript" src="./js/xxhash.min.js" DEFER></script>
+</head>
+<body>
+	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+	<main id="content">
+		<section>
+
+			<h1>Experiment 04: Infinite Worlds </h1>
+
+			<div class="minor-section">
+				<div id="container">
+                </div>
+
+			</div>
+
+			<div class="minor-section">
+				<h2>Description</h2>
+				<p>This project was based on a winter landscape. The winter landscape was essentially snow resting on grass and dirt, 
+				   while also being surrounded by trees and having shadows casted on the snow. Switch between worlds with the switch button. 
+				<br>
+				<br>
+				Credits: Kacper Woźniak's tileset
+				<br>
+				<a href="https://thkaspar.itch.io/micro-tileset-overworld-dungeon">Visit Website</a>
+
+	
+				</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Technical</h2>
+				<p> 
+				- Overworld generates different seeds that consist of dirt, snow, trees, houses and animated water/clouds
+				<br>
+				- Dungeon generates different seeds that consist of different textured walls and treasure chests
+				<br>
+				- Clicking the reseed button will generate a random tileset based off a texture pack
+				<br>
+				- Clicking the switch button will switch from the overworld to the dungeon and vice versa
+				</p>
+			</div>
+
+			<div class="minor-section">
+				<h2>Reflection</h2>
+				<p> This experiment was pretty difficult and was by far the hardest assignment we've done so far.
+					Although it was difficult, I felt proud of managing to generate two sets of worlds (overworld + dungeon)
+					I took my time with experimenting with the different tiles that were featured in the texture pack and 
+					eventually came to a design that I really liked. I'm particularly prouds of the overworld as it looks great 
+					with its winter themed design. I thought the animated water and clouds really added some charm to the design.
+					The hardest part was definitely the dungeon. It was really difficult making different rooms and connecting them.
+				
+				</p>
+			</div>
+
+		</section>
+		<nav id="links" class="minor-section">
+			<!-- Put link back to homepage here. -->
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+		</nav>
+	</main>
+</body>
+</html>
