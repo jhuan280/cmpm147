@@ -30,18 +30,18 @@ const w1 = (sketch) => {
   let birdSpeeds = [2, 2.5, 3, 3.5]; // Different speeds for each bird
   
   function p3_preload() {
-    rock = loadImage('https://cdn.glitch.global/0a203342-a96d-4e1a-a00a-6fd84e0334df/tile_081.png?v=1714468864750'); //32
-    rock2 = loadImage('https://cdn.glitch.global/0a203342-a96d-4e1a-a00a-6fd84e0334df/tile_078.png?v=1714468872580'); //67
-    rock3 = loadImage('https://cdn.glitch.global/0a203342-a96d-4e1a-a00a-6fd84e0334df/tile_069.png?v=1714468879355'); //67
-    water = loadImage('https://cdn.glitch.global/0a203342-a96d-4e1a-a00a-6fd84e0334df/tile_104.png?v=1714468885185'); //37
-    bird = loadImage('https://cdn.glitch.global/0a203342-a96d-4e1a-a00a-6fd84e0334df/bird.png?v=1714469971400');
+    rock = sketch.loadImage('https://cdn.glitch.global/0a203342-a96d-4e1a-a00a-6fd84e0334df/tile_081.png?v=1714468864750'); //32
+    rock2 = sketch.loadImage('https://cdn.glitch.global/0a203342-a96d-4e1a-a00a-6fd84e0334df/tile_078.png?v=1714468872580'); //67
+    rock3 = sketch.loadImage('https://cdn.glitch.global/0a203342-a96d-4e1a-a00a-6fd84e0334df/tile_069.png?v=1714468879355'); //67
+    water = sketch.loadImage('https://cdn.glitch.global/0a203342-a96d-4e1a-a00a-6fd84e0334df/tile_104.png?v=1714468885185'); //37
+    bird = sketch.loadImage('https://cdn.glitch.global/0a203342-a96d-4e1a-a00a-6fd84e0334df/bird.png?v=1714469971400');
     bird.resize(32, 32); // Resize the bird image to 32x32 pixels
     
     // Create bird objects with random initial positions on the y-axis
     for (let i = 0; i < numBirds; i++) {
       birds.push({
         x: -100, // Initial x-coordinate of the bird
-        y: random(height), // Random initial y-coordinate of the bird
+        y: sketch.random(sketch.height), // Random initial y-coordinate of the bird
         speed: birdSpeeds[i] // Speed of the bird's movement
       });
     }
@@ -53,8 +53,8 @@ const w1 = (sketch) => {
   
   function p3_worldKeyChanged(key) {
     worldSeed = XXH.h32(key, 0);
-    noiseSeed(worldSeed);
-    randomSeed(worldSeed);
+    sketch.noiseSeed(worldSeed);
+    sketch.randomSeed(worldSeed);
   }
   
   function p3_tileWidth() {
@@ -77,44 +77,45 @@ const w1 = (sketch) => {
   function p3_drawBefore() {}
   
   function p3_drawTile(i, j) {
-    noStroke();
+    sketch.noStroke();
   
-    if ((floor(7 * noise(i, j))) < 2) {
-      image(rock, 0, 0, 64, 64); // Display grass
-    } else if ((floor(4 * noise(i, j))) < 3) {
+    if ((sketch.floor(7 * sketch.noise(i, j))) < 2) {
+      sketch.image(rock, 0, 0, 64, 64); // Display grass
+    } else if ((sketch.floor(4 * sketch.noise(i, j))) < 3) {
       // Add slight animation to the water
-      let xOffset = cos(time + i * 0.5) * 2; // Adjust speed and intensity as needed
-      let yOffset = sin(time + j * 0.5) * 2; // Adjust speed and intensity as needed
-      image(water, xOffset, yOffset, 64, 64); // Display water
-    } else if ((floor(3 * noise(i, j))) < 4) {
-      image(rock2, 0, 0, 64, 64); // Display flower
+      let xOffset = sketch.cos(time + i * 0.5) * 2; // Adjust speed and intensity as needed
+      let yOffset = sketch.sin(time + j * 0.5) * 2; // Adjust speed and intensity as needed
+      sketch.image(water, xOffset, yOffset, 64, 64); // Display water
+    } 
+    else if ((sketch.floor(3 * sketch.noise(i, j))) < 4) {
+      sketch.image(rock2, 0, 0, 64, 64); // Display flower
     }
   
     if (XXH.h32("tile:" + [i, j], worldSeed) % 8 == 0) {
-      image(rock3, 0, 0, 64, 64); // Display rock
+      sketch.image(rock3, 0, 0, 64, 64); // Display rock
     }
   
     // Your additional code (if any) can go here
   
-    push();
+    sketch.push();
     // Your additional drawing code (if any) can go here
-    pop();
+    sketch.pop();
   }
   
   function p3_drawSelectedTile(i, j) {
-    noFill();
-    stroke(0, 255, 0, 128);
+    sketch.noFill();
+    sketch.stroke(0, 255, 0, 128);
   
-    beginShape();
-    vertex(-tw, 0);
-    vertex(0, th);
-    vertex(tw, 0);
-    vertex(0, -th);
-    endShape(CLOSE);
+    sketch.beginShape();
+    sketch.vertex(-tw, 0);
+    sketch.vertex(0, th);
+    sketch.vertex(tw, 0);
+    sketch.vertex(0, -th);
+    sketch.endShape(sketch.CLOSE);
   
-    noStroke();
-    fill(0);
-    text("tile " + [i, j], 0, 0);
+    sketch.noStroke();
+    sketch.fill(0);
+    sketch.text("tile " + [i, j], 0, 0);
   }
   
   function p3_drawAfter() {
@@ -126,17 +127,17 @@ const w1 = (sketch) => {
       birds[i].x += birds[i].speed;
       
       // If a bird goes off-screen, reset its position
-      if (birds[i].x > width) {
+      if (birds[i].x > sketch.width) {
         birds[i].x = -bird.width;
-        birds[i].y = random(height); // Randomize the y-coordinate again
+        birds[i].y = sketch.random(sketch.height); // Randomize the y-coordinate again
       }
       
       // Draw the bird at its current position with desired size and flipped horizontally
       let birdSize = 32; // Adjust the size of the bird as needed
-      push();
-      scale(-1, 1); // Flip horizontally
-      image(bird, -birds[i].x - birdSize, birds[i].y, birdSize, birdSize);
-      pop();
+      sketch.push();
+      sketch.scale(-1, 1); // Flip horizontally
+      sketch.image(bird, -birds[i].x - birdSize, birds[i].y, birdSize, birdSize);
+      sketch.pop();
     }
   }
   
@@ -203,7 +204,7 @@ const w1 = (sketch) => {
     let canvas = sketch.createCanvas(800, 400);
     canvas.parent("container");
   
-    camera_offset = new p5.Vector(-width / 2, height / 2);
+    camera_offset = new p5.Vector(-sketch.width / 2, sketch.height / 2);
     camera_velocity = new p5.Vector(0, 0);
   
     if (sketch.p3_setup) {
@@ -231,8 +232,8 @@ const w1 = (sketch) => {
     // }
     tile_width_step_main = window.p3_tileWidth ? p3_tileWidth() : 32;
     tile_height_step_main = window.p3_tileHeight ? p3_tileHeight() : 14.5;
-    tile_columns = sketch.ceil(width / (tile_width_step_main * 2));
-    tile_rows = sketch.ceil(height / (tile_height_step_main * 2));
+    tile_columns = sketch.ceil(sketch.width / (tile_width_step_main * 2));
+    tile_rows = sketch.ceil(sketch.height / (tile_height_step_main * 2));
   }
   
   sketch.mouseClicked = () => {
@@ -271,7 +272,7 @@ const w1 = (sketch) => {
     }
   
     let world_pos = screenToWorld(
-      [0 - mouseX, mouseY],
+      [0 - sketch.mouseX, sketch.mouseY],
       [camera_offset.x, camera_offset.y]
     );
     let world_offset = cameraToWorldOffset([camera_offset.x, camera_offset.y]);
@@ -324,12 +325,12 @@ const w1 = (sketch) => {
   }
   
   function drawTileDescription([world_x, world_y], [screen_x, screen_y]) {
-    push();
-    translate(screen_x, screen_y);
+    sketch.push();
+    sketch.translate(screen_x, screen_y);
     // if (window.p3_drawSelectedTile) {
     p3_drawSelectedTile(world_x, world_y, screen_x, screen_y);
     // }
-    pop();
+    sketch.pop();
   }
   
   // Draw a tile, mostly by calling the user's drawing code.
@@ -346,10 +347,9 @@ const w1 = (sketch) => {
     sketch.pop();
   }
   
-let world1 = new p5(w1, 'w1');
-
-
 }
+
+let world1 = new p5(w1, 'w1');
 
 
 
