@@ -59,8 +59,13 @@ function initDesign(inspiration) {
     canvasWidth = inspiration.image.width / 8;
     canvasHeight = inspiration.image.height / 8;
   }
-
+  $(".caption").text(inspiration.credit); // Set the caption text
   resizeCanvas(canvasWidth, canvasHeight);
+
+  // add the original image to #original
+  const imgHTML = `<img src="${inspiration.assetUrl}" style="width:${canvasWidth}px;">`
+  $('#original').empty();
+  $('#original').append(imgHTML);
   
   let design = {
     bg: 128,
