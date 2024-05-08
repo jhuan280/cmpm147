@@ -38,9 +38,9 @@ function getInspirations() {
       credit: "Microsoft, 2015"
     },
     {
-      name: "Discord", 
-      assetUrl: "https://cdn.glitch.global/136a247e-600f-4f6a-b511-bceadea33ab8/discord.png?v=1715050203009",
-      credit: "Discord Inc, 2005"
+      name: "Steam", 
+      assetUrl: "https://cdn.glitch.global/136a247e-600f-4f6a-b511-bceadea33ab8/steam.png?v=1715148974884",
+      credit: "Steam, 2003"
     },
   ];
 }
