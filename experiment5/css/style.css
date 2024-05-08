@@ -19,13 +19,4 @@ body {
     height: 600px;
 }
 
-#asciiBox {
-    position: absolute;
-    top: 380px; /* Adjusted top position */
-    left: 500px; /* Left position remains unchanged */
-}
 
-#switchButton {
-    position: absolute;
-    left: 300px;
-}

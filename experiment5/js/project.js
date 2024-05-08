@@ -33,8 +33,8 @@ function getInspirations() {
       credit: "Mozilla Corporation, 2004"
     },
     {
-      name: "Visual Studio Code", 
-      assetUrl: "https://cdn.glitch.global/136a247e-600f-4f6a-b511-bceadea33ab8/vscode.png?v=1715049996900",
+      name: "Spotify", 
+      assetUrl: "https://cdn.glitch.global/136a247e-600f-4f6a-b511-bceadea33ab8/spotify.png?v=1715144036574",
       credit: "Microsoft, 2015"
     },
     {
@@ -46,7 +46,18 @@ function getInspirations() {
 }
 
 function initDesign(inspiration) {
-  resizeCanvas(inspiration.image.width / 8, inspiration.image.height / 8);
+  let canvasWidth, canvasHeight;
+
+  // Adjust the scaling factor only for Firefox image
+  if (inspiration.name === "Fire Fox") {
+    canvasWidth = inspiration.image.width / 13;
+    canvasHeight = inspiration.image.height / 13;
+  } else {
+    canvasWidth = inspiration.image.width / 8;
+    canvasHeight = inspiration.image.height / 8;
+  }
+
+  resizeCanvas(canvasWidth, canvasHeight);
   
   let design = {
     bg: 128,
@@ -69,6 +80,7 @@ function initDesign(inspiration) {
   
   return design;
 }
+
 
 
 function renderDesign(design, inspiration) {
