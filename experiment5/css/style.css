@@ -19,4 +19,36 @@ body {
     height: 600px;
 }
 
+.results-top, .controls {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 20px;
+  }
+  
+  .results-top .image-container p {
+    text-align: center;
+  }
+  
+  .results-top>* {
+    flex: 1;
+  }
+  
+  .results-bottom p {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  
+  .results-bottom p img {
+    width: 100px;
+    height: auto;
+  }
+  
+  .caption {
+    text-align: center;
+    font-size: 0.8em;
+  }
 
