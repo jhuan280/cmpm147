@@ -1,109 +1,123 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment 5 - Evolutionary Impressions</title>
+    <!-- This title is used for tabs and bookmarks -->
+    <title>Experiment 5 - Evolutionary Impressions</title>
 
-	<!-- Use UTF character set, a good idea with any webpage -->
-	<meta charset="UTF-8" />
-	<!-- Set viewport so page remains consistently scaled w narrow devices -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Use UTF character set, a good idea with any webpage -->
+    <meta charset="UTF-8" />
+    <!-- Set viewport so page remains consistently scaled w narrow devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
-	<link rel="stylesheet" type="text/css" href="../css/site.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- Include CSS file, including a site-wide CSS and for this particular page -->
+    <link rel="stylesheet" type="text/css" href="../css/site.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
-	<!-- Load jQuery library -->
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    <!-- Load jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
         crossorigin="anonymous"></script>
-	<!-- Load p5.js library -->
-	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+    <!-- Load p5.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
 
-	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
+    <!-- Link to javascript files - DEFER waits until all elements are rendered -->
     <script type="text/javascript" src="../js/site.js" DEFER></script>
-	<!-- Use me for a JavaScript OOP Project -->
-	<script type="text/javascript" src="./js/project.js" DEFER></script>
-	<!-- Use me for a p5.js project -->
-	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+    <!-- Use me for a JavaScript OOP Project -->
+    <script type="text/javascript" src="./js/project.js" DEFER></script>
+    <!-- Added for new js file -->
+    <script type="text/javascript" src="./js/my_design.js" DEFER></script>
+    <!-- Use me for a p5.js project -->
+    <script type="text/javascript" src="./js/sketch.js" DEFER></script>
 </head>
 <body>
-	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
-	<main id="content">
-		<section>
+    <!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
+    <main id="content">
+        <section>
 
-			<h1>Experiment 5 - Evolutionary Impressions</h1>
+            <h1>Experiment 5 - Evolutionary Impressions</h1>
 
-			<div class="minor-section">
-				<div id="canvas-container">
-					<!-- canvas will be added here -->
-
-					<body>
-						<select id="dropper"></select>
-						<button id="restart">
-						  restart
-						</button>
-						<p>
-						  Mutation rate (<span id="rate"></span>%):<br /><input
-							id="slider"
-							type="range"
-							min="1"
-							max="100"
-							value="100"
-						  />
-						</p>
-						<p id="active"></p>
-						<p>Active score: <span id="activeScore"></span></p>
-						<p>Exploration rate: <span id="fpsCounter"></span> fps</p>
-						<p id="best"></p>
-						<p>Best score: <span id="bestScore"></span></p>
-						<p id="memory" data-max-items="16"></p>
-					  </body>
-
-
-				</div>
-                <div class="fullscreen-box">
-                    <button id="fullscreen">Fullscreen</button>
+            <div class="minor-section results">
+                <div class="results-top">
+                    <div class="image-container">
+                        <p id="original"></p>
+                        <p class="caption"></p>
+                    </div>
+                    <div class="image-container">
+                        <p id="active"></p>
+                        <p>Active Image</p>
+                    </div>
+                    <div class="image-container">
+                        <p id="best"></p>
+                        <p>Best Image</p>
+                    </div>
                 </div>
-			</div>
 
-			<div class="minor-section">
-				<h2>Description</h2>
-				<p>This project was essentially just an image renderer. Using a dropdown box, the user can select a picture of one
-				   of many different browser logos and icons and has the program draw out the icons using primitive shapes and 
-				   colors that correspond to said picture.
-				   <br>
-				   <br>
-				   Some of these images include browser logos like Google Chrome, Firefox and Microsoft Edge amongst many more.
+                <div class="controls">
+                    <div class="controls-col1">
+                        <select id="dropper"></select>
+                        <button id="restart">
+                        restart
+                        </button>
+                        <p>
+                        Mutation rate (<span id="rate"></span>%):<br /><input
+                            id="slider"
+                            type="range"
+                            min="1"
+                            max="100"
+                            value="100"
+                        />
+                        </p>
+                    </div>
+                    <div class="controls-col2">
+                        <p>Active score: <span id="activeScore"></span></p>
+                        <p>Exploration rate: <span id="fpsCounter"></span> fps</p>
+                        <p>Best score: <span id="bestScore"></span></p>
+                    </div>
+                </div>
+
+                <div class="results-bottom">
+                    <p id="memory" data-max-items="28"></p>
+                </div>
+            </div>
+
+            <div class="minor-section">
+                <h2>Description</h2>
+                <p>
+				This project was essentially just an image renderer. Using a dropdown box, the user can select a picture of one
+				of many different browser logos and icons and has the program draw out the icons using primitive shapes and 
+				colors that correspond to said picture.
+				<br>
+				<br>
+				Some of these images include browser logos like Google Chrome, Firefox and Microsoft Edge amongst many more.
 				</p>
-			</div>
+            </div>
 
-			<div class="minor-section">
-				<h2>Technical</h2>
-				<p>
-				Images are read and generate using primitive shapes such as rectangles, squares, triangles and circles.
-				These shapes use a sense of randomness and each generated iteration has a varied amount of these shapes.
-				The colors of these shapes also correspond with their respective icons.
+            <div class="minor-section">
+                <h2>Technical</h2>
+                <p>
+					Images are read and generate using primitive shapes such as rectangles, squares, triangles and circles.
+					These shapes use a sense of randomness and each generated iteration has a varied amount of these shapes.
+					The colors of these shapes also correspond with their respective icons.
+                </p>
+            </div>
+
+            <div class="minor-section">
+                <h2>Reflection</h2>
+                <p>
+                    This experiment wasn't as difficult as the previous one, but challenging nevertheless. 
+                    I felt proud of managing to generate different sorts sets of icons (Chrome, Firefox, Microsoft Edge, etc).
+                    I took my time with messing around with the different shapes and colors that were being displayed to represent
+                    each image and eventually came to a design that I liked. 
 				</p>
-			</div>
+            </div>
 
-			<div class="minor-section">
-				<h2>Reflection</h2>
-				<p>
-					This experiment wasn't as difficult as the previous one, but challenging nevertheless. 
-					I felt proud of managing to generate different sorts sets of icons (Chrome, Firefox, Microsoft Edge, etc).
-					I took my time with messing around with the different shapes and colors that were being displayed to represent
-					each image and eventually came to a design that I liked. 
-				</p>
-			</div>
-
-		</section>
-		<nav id="links" class="minor-section">
-			<!-- Put link back to homepage here. -->
+        </section>
+        <nav id="links" class="minor-section">
+            <!-- Put link back to homepage here. -->
             <ul>
                 <li><a href="../index.html">Home</a></li>
             </ul>
-		</nav>
-	</main>
+        </nav>
+    </main>
 </body>
 </html>
