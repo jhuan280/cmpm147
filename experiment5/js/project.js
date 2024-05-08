@@ -34,7 +34,7 @@ function getInspirations() {
     },
     {
       name: "Spotify", 
-      assetUrl: "https://cdn.glitch.global/136a247e-600f-4f6a-b511-bceadea33ab8/spotify.png?v=1715144036574",
+      assetUrl: "https://cdn.glitch.global/136a247e-600f-4f6a-b511-bceadea33ab8/spotify.png?v=1715144691229",
       credit: "Microsoft, 2015"
     },
     {
@@ -48,10 +48,13 @@ function getInspirations() {
 function initDesign(inspiration) {
   let canvasWidth, canvasHeight;
 
-  // Adjust the scaling factor only for Firefox image
+  // Adjust the scaling factor for different images
   if (inspiration.name === "Fire Fox") {
     canvasWidth = inspiration.image.width / 13;
     canvasHeight = inspiration.image.height / 13;
+  } else if (inspiration.name === "Bing") {
+    canvasWidth = inspiration.image.width / 6;
+    canvasHeight = inspiration.image.height / 6;
   } else {
     canvasWidth = inspiration.image.width / 8;
     canvasHeight = inspiration.image.height / 8;
@@ -80,6 +83,7 @@ function initDesign(inspiration) {
   
   return design;
 }
+
 
 
 
